@@ -1,0 +1,12 @@
+.PunkList {
+  display: flex;
+  cursor: pointer;
+  overflow: scroll;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+
+.PunkList::-webkit-scrollbar {
+  display: none;
+}
