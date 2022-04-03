@@ -1,18 +1,19 @@
 import './App.css';
 import Header from './components/Header';
+import Main from './components/Main';
 import PunkList from './components/PunkList';
-import CollectionCard from './components/CollectionCard';
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function App() {
   const [punkListData, setPunkListData] = useState([])
+  const [activePunk, setActivePunk] = useState(null)
 
   useEffect(() => {
     const getMyNfts = async () => {
       const openseaData = await axios('https://testnets-api.opensea.io/assets?asset_contract_address=0xECc2f2e3FFDbD30844b17Da13bE18aE8b7F377C4&order_direction=asc')
-      console.log(openseaData.data.assets)
       setPunkListData(openseaData.data.assets)
+      setActivePunk(openseaData.data.assets[0])
     }
   
     return getMyNfts()
@@ -21,13 +22,11 @@ function App() {
   return (
     <div className='app'>
       <Header />
-      <CollectionCard
-        id={0}
-        name={'bandand'}
-        traits={[{ value: 7 }]}
-        image='https://ipfs.thirdweb.com/ipfs/QmX5KmDnfBdHQhmCSnqsb4yp3dyHcY6dzd2f7L9NEgATtQ/0.jpg'
+      <Main activePunk={activePunk}/>
+      <PunkList
+        punkListData={punkListData}
+        setActivePunk={setActivePunk}
       />
-      <PunkList punkListData={punkListData} />
     </div>
   );
 }
